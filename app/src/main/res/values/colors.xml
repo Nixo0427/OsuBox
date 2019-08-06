@@ -2,5 +2,30 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#BF7FCA</color>
+
+    <color name="color_666666">#666666</color>
+    <color name="color_222222">#222222</color>
+
+    <color name="color_line">#017EFF</color>
+    <color name="color_bp">#E9201F1F</color>
+
+
+    <color name="color_rank1">#EE5C4E</color>
+    <color name="color_rank2">#F78C2F</color>
+    <color name="color_rank3">#B0DB43</color>
+    <color name="color_rank4">#4ED1D1</color>
+    <color name="color_rank5">#3398CE</color>
+    <color name="color_rank6">#933EE4</color>
+    <color name="color_rank7">#C24DE2</color>
+    <color name="color_rank8">#FCF7FD</color>
+
+    <color name="color_tv">#E41F2020</color>
+
+    <color name="color_b_rank_sh">#807A7A</color>
+    <color name="color_b_rank_s">#F8C220</color>
+    <color name="color_b_rank_a">#D852EC52</color>
+    <color name="color_b_rank_b">#78DDF8</color>
+    <color name="color_b_rank_c">#D8DD52EC</color>
+    <color name="color_b_rank_d">#D8E94530</color>
 </resources>

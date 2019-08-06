@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="SimperPersonView">
+
+        <attr name="android:text" />
+    </declare-styleable>
+    <declare-styleable name="DoubleTextView">
+        <attr name="text_left">1111</attr>
+        <attr name="text_right">2222</attr>
+        <attr name="text_left_color"/>
+        <attr name="text_right_color"/>
+        <attr name="text_left_size">14</attr>
+        <attr name="text_right_size">14</attr>
+    </declare-styleable>
+    <declare-styleable name="chartView">
+        <attr name="xylinecolor" />
+        <attr name="xylinewidth" />
+        <attr name="xytextcolor" />
+        <attr name="xytextsize" />
+        <attr name="linecolor" />
+        <attr name="interval" />
+        <attr name="bgcolor" />
+        <attr name="startColor"/>
+        <attr name="endColor"/>
+        <attr name="tvContentBg"/>
+        <attr name="yText"/>
+        <attr name="circlePoint" />
+    </declare-styleable>
+    <declare-styleable name="SignatureView">
+        <attr name="minWidth" format="dimension" />
+        <attr name="maxWidth" format="dimension" />
+        <attr name="penColor" format="color" />
+        <attr name="velocityFilterWeight" format="float" />
+    </declare-styleable>
+    <declare-styleable name="SimpleWheelView">
+        <attr name="formHeight" format="dimension"/>
+        <attr name="maskSize" format="dimension"/>
+        <attr name="itemSize" format="dimension"/>
+        <attr name="defTextSize" format="dimension"/>
+        <attr name="defTextColor" format="color"/>
+        <attr name="selectedTextSize" format="dimension"/>
+        <attr name="selectedTextColor" format="color"/>
+        <attr name="lineColor" format="color"/>
+        <attr name="lineHeight" format="dimension"/>
+    </declare-styleable>
+
+</resources>
