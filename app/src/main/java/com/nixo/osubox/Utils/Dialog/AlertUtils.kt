@@ -1,9 +1,13 @@
 package com.nixo.osubox.Utils.Dialog
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.support.v4.widget.ContentLoadingProgressBar
+import android.support.v7.widget.CardView
 import android.view.View
 import com.nixo.osubox.R
 
@@ -21,11 +25,13 @@ object AlertUtils {
     /*
 	 * 显示进度条
 	 */
+    @SuppressLint("ObjectAnimatorBinding")
     fun showProgress(isCancel: Boolean, cxt: Context) {
+        var view : View? = null
         if (mDialog == null || mContext != null && mContext!!.hashCode() != cxt.hashCode()) {
-            mContext= cxt
+            mContext = cxt
             mDialog = Dialog(cxt, R.style.LoadingDialog)
-            var view = View.inflate(mContext, R.layout.dialog_loading, null)
+            view = View.inflate(mContext, R.layout.dialog_loading, null)
             mDialog!!.setContentView(view)
             mDialog!!.setCanceledOnTouchOutside(false)// 按返回键不能退出
             mDialog!!.setOnDismissListener {
@@ -46,10 +52,12 @@ object AlertUtils {
             if (mDialog!!.isShowing)
                 mDialog!!.dismiss()
     }
-//    fun onDestroy(){
+    fun onDestroy(){
+        if(mContext != null){
+            mContext = null
 //        if (gifDrawable!= null){
 //
 //            gifDrawable!!.recycle()
-//        }
-//    }
+        }
+    }
 }

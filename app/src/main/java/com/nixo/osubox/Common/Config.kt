@@ -2,6 +2,11 @@ package com.nixo.osubox.Common
 
 object Config{
     const val k = "363c0b111c00b59dbeee36b3dbdc241ecf6ead2c"
+    const val BMOBKEY = "363c0b111c00b59dbeee36b3dbdc241ecf6ead2c"
+
+    var name = ""
+    var img  = ""
+
 
     const val None  = 0
     const val NF    = 1
@@ -27,7 +32,6 @@ object Config{
     const val NFHDHRNC = NF+HD+HR+NC
     const val NFHDHRFL = NF+HD+HR+FL
 
-
     //HD
     const val HDDT = HD+DT
     const val HDNC = HD+NC
@@ -37,13 +41,10 @@ object Config{
     const val HDHRNC = HD+NC+HR
     const val HDHRFL = HD+HR+FL
 
-
-
     //HR
     const val HRDT = HR+DT
     const val HRFL = HR+FL
     const val HRNC = HD+NC
-
 
     //EZ
     const val EZDT = EZ+ DT

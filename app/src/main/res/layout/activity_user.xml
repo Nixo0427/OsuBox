@@ -24,13 +24,14 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="?attr/colorPrimary">
             <ImageView
+                    android:id="@+id/iv_barbg"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/app_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
             <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
+
                     android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
@@ -40,10 +41,12 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+            android:fillViewport="true"
+            android:listSelector="@null"
+            android:scrollbars="none"
             tools:showIn="@layout/activity_user"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
             android:layout_marginTop="-20dp"
             app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
             >

@@ -1,72 +1,54 @@
 package com.nixo.osubox.UserModel.View
 
-import android.annotation.SuppressLint
-import android.support.v7.widget.LinearLayoutManager
+import android.graphics.BitmapFactory
+import android.os.Build
+import android.support.annotation.RequiresApi
+import android.support.v4.app.Fragment
 import com.bumptech.glide.Glide
 import com.nixo.osubox.Common.BaseActivity
 import com.nixo.osubox.R
-import com.nixo.osubox.UserModel.Adapter.UserBpAdapter
-import com.nixo.osubox.UserModel.Moudle.BeatmapsetInfo
-import com.nixo.osubox.UserModel.Moudle.UserBP
-import com.nixo.osubox.UserModel.Moudle.UserResponse
+import com.nixo.osubox.UserModel.Adapter.PPFragmentPagerAdapter
 import com.nixo.osubox.UserModel.Presenter.UserPresenter
-import com.nixo.osubox.Utils.Another.RankColorUtil
-import com.nixo.osubox.Utils.Dialog.AlertUtils
+import com.nixo.osubox.UserModel.View.Fragment.PpPlusUserFragment
+import com.nixo.osubox.UserModel.View.Fragment.PpyUserFragment
+import com.nixo.osubox.Utils.Another.RenderScriptBitmapBlur
+import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.android.synthetic.main.include_user_info.*
 
-class UserActivity : BaseActivity<UserPresenter>() {
+
+class UserActivity : BaseActivity<UserPresenter>() ,PpyUserFragment.UserDataInterface {
+
 
     override fun onLayout(): Int = R.layout.activity_user
 
-    private var u = """Sustain"""
-    var  bpAdapter :UserBpAdapter? = null
 
-
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun initActivity() {
-        AlertUtils.showProgress(true,this@UserActivity)
-        rv_bp.layoutManager = LinearLayoutManager(this@UserActivity)
-        presenter.getUser(u)
-        presenter.getUserBp(u)
-
-    }
-
-
-    /**
-     * Ouser信息装填
-     */
-    @SuppressLint("SetTextI18n")
-    fun initUserAppBar(userData : UserResponse){
-        tv_name.text = userData.username
-        Glide.with(this@UserActivity).load(userData.user_img).into(civ_head)
-        tv_rank.setTextColor(resources.getColor(RankColorUtil.getRankColor(userData.pp_rank)))
-        tv_rank.text = "#${userData.pp_rank}"
-        tv_c_rank.setTextColor(resources.getColor(RankColorUtil.getRankColor(userData.pp_country_rank)))
-        tv_c_rank.text = "#${userData.pp_country_rank}"
-        tv_lv.text = "Lv.${userData.level}"
-        tv_pc.text = userData.playcount
-        tv_acc.text = "${String.format("%.2f",userData.accuracy.toDouble())}%"
-        tv_country.text = userData.country
-        tv_watched.text = "${(userData.total_seconds_played.toDouble()*0.0002778)}H"
-        tv_join.text = userData.join_date
-
+        //设置高斯模糊
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.nixo_bg2)
+        var blurBitmap = RenderScriptBitmapBlur(this@UserActivity).getBlurBitmap(25, bitmap)
+        iv_barbg.setImageBitmap(blurBitmap)
+        var ppyUserFragment = PpyUserFragment()
+        ppyUserFragment.bindFaceInf(this)
+        var ppPlusUserFragment = PpPlusUserFragment()
+        var list = ArrayList<Fragment>()
+        list.add(ppyUserFragment)
+        list.add(ppPlusUserFragment)
+        vp_pager.adapter = PPFragmentPagerAdapter(supportFragmentManager,list)
+        vp_pager.currentItem = 0
 
 
     }
-
-    /**
-     * OuserBp信息装填
-     */
-    fun initUserBp(bpList : MutableList<UserBP> , beatMapsList:ArrayList<BeatmapsetInfo>){
-        var adapter = UserBpAdapter(this@UserActivity,R.layout.item_user_bp,bpList)
-        adapter.setBpInfo(beatMapsList)
-        rv_bp.adapter = adapter
-        AlertUtils.dismissProgress()
+    //Fragment回调，头像和玩家姓名
+    override fun onFace(name: String, img: String,level:String) {
+        tv_name.text = name
+        Glide.with(this).load(img).into(civ_head)
+        tv_lv.text = "Lv.$level"
     }
 
 
-    override fun onDestory() {
 
-    }
+    override fun onDestory() {}
 
 
 }

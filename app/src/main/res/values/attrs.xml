@@ -45,5 +45,12 @@
         <attr name="lineColor" format="color"/>
         <attr name="lineHeight" format="dimension"/>
     </declare-styleable>
-
+    <declare-styleable name="ZLPolygonView">
+        <attr name="InnerColor" format="color|reference"/>
+        <attr name="LineColor" format="color|reference"/>
+        <attr name="LineWidth" format="dimension"/>
+        <attr name="DotNumber" format="integer"/>
+        <attr name="EdgeNumber" format="integer"/>
+        <attr name="TextSize" format="dimension"/>
+    </declare-styleable>
 </resources>

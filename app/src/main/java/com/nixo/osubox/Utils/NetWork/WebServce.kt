@@ -19,7 +19,7 @@ private val cacheFile by lazy{
 
 object RetrofitClient {
     val BASE_URL =  "https://osu.ppy.sh/"
-    val ATTR_URL =  "hhttps://a.ppy.sh/"
+    val ATTR_URL =  "https://syrin.me/pp+/"
     val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -36,7 +36,7 @@ object RetrofitClient {
             )
             .build()
     }
-    val retrofitAttr by lazy {
+    val retrofitPPP by lazy {
         Retrofit.Builder()
             .baseUrl(ATTR_URL)
             .addConverterFactory(GsonConverterFactory.create())

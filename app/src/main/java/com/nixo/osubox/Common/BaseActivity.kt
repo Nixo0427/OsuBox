@@ -3,6 +3,7 @@ package com.nixo.osubox.Common
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.yanzhenjie.sofia.Sofia
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.primaryConstructor
@@ -36,6 +37,9 @@ abstract class BaseActivity<out P : BasePresenter<BaseActivity<P>>> : IView<P>, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(onLayout())
+        Sofia.with(this)
+            .statusBarBackgroundAlpha(0)
+            .navigationBarBackgroundAlpha(0)
         initActivity()
         presenter.onCreate(savedInstanceState)
         AppManager.appManager!!.addActivity(this)
