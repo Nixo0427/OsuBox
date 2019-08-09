@@ -5,7 +5,7 @@ import com.nixo.osubox.R
 object RankColorUtil {
 
     fun getRankColor(rank : String) : Int{
-        val rank = rank.toInt()
+        val rank = if(rank == "") 0 else rank.toInt()
         if(rank <2){
             return R.color.color_rank1
         }else if(rank in 2..50){
