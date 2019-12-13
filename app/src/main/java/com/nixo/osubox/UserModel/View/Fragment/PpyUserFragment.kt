@@ -39,20 +39,22 @@ class PpyUserFragment : BaseFragment<PpyUserPresenter>() {
     }
 
     interface UserDataInterface{
-        fun onFace(name:String,img:String,level:String)
+        suspend  fun onFace(name:String,img:String,level:String)
     }
 
+    //Acc计算公式
 
 
     /**
      * Ouser信息装填
      */
     @SuppressLint("SetTextI18n")
-    fun initUserAppBar(userData : UserResponse){
+    suspend fun initUserAppBar(userData : UserResponse){
         //设置玩家信息
         inf!!.onFace(userData.username?:"",userData.user_img?:"",userData.level?:"")
         tv_rank.setTextColor(resources.getColor(RankColorUtil.getRankColor(userData.pp_rank)))
         tv_rank.text = "#${userData.pp_rank?:""}"
+        tv_pp.text = "${userData.pp_raw} pp"
         tv_c_rank.setTextColor(resources.getColor(RankColorUtil.getRankColor(userData.pp_country_rank?:"")))
         tv_c_rank.text = "#${userData.pp_country_rank?:""}"
         tv_pc.text = userData.playcount?:""

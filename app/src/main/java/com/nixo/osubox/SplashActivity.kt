@@ -1,36 +1,28 @@
 package com.nixo.osubox
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Handler
 import android.os.Message
-import com.nixo.osubox.Common.BaseActivity
-import com.nixo.osubox.UserModel.View.UserActivity
-import kotlinx.android.synthetic.main.activity_splash.*
-import android.support.design.animation.AnimatorSetCompat.playTogether
-import android.opengl.ETC1.getWidth
-import android.opengl.ETC1.getHeight
-import android.support.v4.view.ViewCompat.animate
-import android.R.attr.translationY
-import android.animation.*
-import android.content.Context
-import android.graphics.Typeface
-import android.os.Build
-import android.support.annotation.NonNull
 import android.support.annotation.RequiresApi
 import android.view.View
-import android.view.ViewAnimationUtils
-import android.widget.TextView
-import android.widget.Toast
-import cn.bmob.v3.util.V
-import com.nixo.osubox.Common.APP
-import com.nixo.osubox.Utils.Another.StringUtils
-import com.nixo.osubox.Utils.Data.Preference
+import com.bumptech.glide.Glide
+import com.nixo.colagauss.GaussBuilder
+import com.nixo.osubox.Common.BaseActivity
+import com.nixo.osubox.UserModel.View.UserActivity
+import com.nixo.osubox.Utils.Another.RenderScriptBitmapBlur
 import com.nixo.osubox.Utils.Data.SharedUtils
-import com.nixo.osubox.Utils.Data.pref
 import com.nixo.osubox.Utils.Dialog.AlertUtils
 import com.nixo.osubox.Utils.Ext.boi
-import com.safframework.log.L
+import com.nixo.osubox.Utils.LaucherTime
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_splash.*
+import java.lang.NullPointerException
 
 
 class SplashActivity : BaseActivity<SplashPresenter>() {
@@ -46,12 +38,15 @@ class SplashActivity : BaseActivity<SplashPresenter>() {
 
     }
 
-
-
     override fun onLayout(): Int = R.layout.activity_splash
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initActivity() {
+        LaucherTime.endTime()
+        val  splashBgBitmap = BitmapFactory.decodeResource(resources, R.mipmap.splash_bg)
+        val  blurBitmap = RenderScriptBitmapBlur(this@SplashActivity).getBlurBitmap(25,splashBgBitmap)
+        Glide.with(this).load(blurBitmap).into(iv_bg)
+//       initBg()
         if(SharedUtils(this@SplashActivity).getString("account").isEmpty()){
             rv_first.visibility = View.VISIBLE
             welcomeAnimation()
@@ -63,6 +58,9 @@ class SplashActivity : BaseActivity<SplashPresenter>() {
 
 
     }
+//    private  fun initBg() {
+//        GaussBuilder(this).resources(R.mipmap.splash_bg).load(iv_bg)
+//    }
 
     private fun welcomeAnimation() {
         AnimatorSet().also {
@@ -79,8 +77,8 @@ class SplashActivity : BaseActivity<SplashPresenter>() {
                     AnimatorSet().also {
                         it.playTogether(
                             ObjectAnimator.ofFloat(tv_logo,"translationY",0f,-100f),
-                            ObjectAnimator.ofFloat(view_after,"scaleX",1.0f,5.6f),
-                            ObjectAnimator.ofFloat(view_after,"scaleY",1.0f,8f))
+                            ObjectAnimator.ofFloat(view_after,"scaleX",1.0f,6.6f),
+                            ObjectAnimator.ofFloat(view_after,"scaleY",1.0f,9f))
                         it.duration = 1000
                         it.addListener(object : AnimatorListenerAdapter() {
                             override fun onAnimationEnd(animation: Animator?) {
@@ -89,13 +87,13 @@ class SplashActivity : BaseActivity<SplashPresenter>() {
                                 et_account.visibility = View.VISIBLE
                                 ObjectAnimator.ofFloat(et_account,"alpha",0f,1f).start()
                                 iv_join.visibility = View.VISIBLE
-                                ObjectAnimator.ofFloat(iv_join,"scaleX",0f,1.2f,1f).start()
-                                ObjectAnimator.ofFloat(iv_join,"scaleY",0f,1.2f,1f).start()
-
+                                ObjectAnimator.ofFloat(iv_join,"scaleX",0f,1.8f,1f).start()
+                                ObjectAnimator.ofFloat(iv_join,"scaleY",0f,1.8f,1f).start()
                                 iv_join.boi {
+//                                    throw NullPointerException("test")
                                     AlertUtils.showProgress(false,this@SplashActivity)
                                     presenter.authUserVisibiliable(et_account.text.toString())
-
+//                                     Action(MainActivity::class.java)
 
                                 }
                             }
@@ -119,7 +117,7 @@ class SplashActivity : BaseActivity<SplashPresenter>() {
             finish()
         }else{
             AlertUtils.dismissProgress()
-            Toasty.error(this@SplashActivity,"Login Fail,Not this Ouser ;w;").show()
+            Toasty.error(this@SplashActivity,"Bind Fail,Not this Ouser ;w;").show()
 
         }
     }

@@ -7,9 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SplashActivity">
+    <ImageView
+            android:id="@+id/iv_bg"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     <RelativeLayout
             android:id="@+id/rv_first"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <View
@@ -37,15 +42,17 @@
         <LinearLayout
                 android:layout_centerVertical="true"
                 android:gravity="right|bottom"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
                 android:layout_centerHorizontal="true"
                 android:layout_width="290dp"
-                android:layout_height="410dp">
+                android:layout_height="420dp">
             <View
                     android:id="@+id/cd_login_bg"
                     android:visibility="invisible"
                     android:background="@drawable/shawods_shape5_btn"
                     android:layout_width="280dp"
-                    android:layout_height="400dp"
+                    android:layout_height="420dp"
             />
         </LinearLayout>
 
@@ -73,7 +80,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/white_shape_btn"
                 android:layout_width="200dp" android:layout_height="50dp"
-                android:hint="Osu UserName owo"/>
+                android:hint="Tell me your OSU name"/>
 
         <ImageView
                 android:transformPivotY="20dp"
@@ -89,7 +96,7 @@
                 android:transformPivotY="20dp"
                 android:id="@+id/tv_logo"
                 android:text="OSU BOX"
-                android:textSize="30dp"
+                android:textSize="50dp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="150dp"

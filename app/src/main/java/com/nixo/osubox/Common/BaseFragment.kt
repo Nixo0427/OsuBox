@@ -1,6 +1,9 @@
 package com.nixo.osubox.Common
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -78,17 +81,24 @@ abstract class BaseFragment<out P: BasePresenter<BaseFragment<P>>>: IView<P>,Fra
     }
 
 
-    fun Action(activity : Class<*>){
-        var intent = Intent(context,activity)
-        startActivity(intent)
+    fun Action(activity : Class<*>) {
+        var intent = Intent(context, activity)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity as Activity).toBundle())
+        } else {
+            startActivity(intent)
+        }
     }
 
     fun paramerAction(activity: Class<*>,bundle: Bundle){
         var intent = Intent()
         intent.setClass(context,activity)
         intent.putExtras(bundle)
-        startActivity(intent)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity as Activity).toBundle())
+        }else{
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

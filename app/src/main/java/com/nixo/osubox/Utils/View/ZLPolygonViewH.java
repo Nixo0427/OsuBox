@@ -65,7 +65,6 @@ public class ZLPolygonViewH extends SurfaceView implements SurfaceHolder.Callbac
         mEdgeNumber = a.getInt(R.styleable.ZLPolygonView_EdgeNumber, 4);
         mTextSize = a.getDimensionPixelSize(R.styleable.ZLPolygonView_TextSize, 14);
         a.recycle();
-
         init();
     }
 

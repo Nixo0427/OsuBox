@@ -1,8 +1,7 @@
 package com.nixo.osubox.Utils.NetWork
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.nixo.osubox.Common.APP
-import com.nixo.osubox.Common.AppContext
+import com.nixo.osubox.Common.App
 import com.nixo.osubox.Utils.Ext.ensureDir
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -14,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 
 private val cacheFile by lazy{
-//    File(APP.mContext!!.cacheDir,"webServiceApi").apply { ensureDir() }
+    File(App._context!!.cacheDir,"webServiceApi").apply { ensureDir() }
 }
 
 object RetrofitClient {

@@ -11,10 +11,12 @@ import com.nixo.osubox.UserModel.Moudle.userBpList
 import com.nixo.osubox.UserModel.View.Fragment.PpyUserFragment
 import com.nixo.osubox.Utils.NetWork.RetrofitClient
 import com.safframework.log.L
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.lang.StringBuilder
@@ -42,17 +44,25 @@ class PpyUserPresenter : BasePresenter<PpyUserFragment>() {
     object EventServceApi : UserServce by RetrofitClient.retrofit.create(UserServce::class.java)
 
     fun getUser(u: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            val data = EventServceApi.getUser(Config.k, u).await()
-            L.json(data)
-            mUserImg.append("""${data[0].user_id}?""")
-            data[0].user_img = mUserImg.toString()
-            view.initUserAppBar(data[0])
+        try {
+            GlobalScope.launch(Dispatchers.Main) {
+                val data = EventServceApi.getUser(Config.k, u).await()
+                L.json(data)
+                mUserImg.append("""${data[0].user_id}?""")
+                data[0].user_img = mUserImg.toString()
+                view.initUserAppBar(data[0])
 
+            }
+        }catch (e : HttpException){
+
+        }finally {
+            Toasty.error(view.context!!,"PPY IS GONE QAQ")
         }
+
     }
 
     fun getUserBp(u: String) {
+        try{
         GlobalScope.launch(Dispatchers.Main) {
             val data = EventServceApi.getUserBp(Config.k, u, 50).await()
             var list = userBpList(data)
@@ -67,6 +77,11 @@ class PpyUserPresenter : BasePresenter<PpyUserFragment>() {
             view.initUserBp(mBpList, beatMapData)
 
         }
+    }catch (e : HttpException){
+
+    }finally {
+        Toasty.error(view.context!!,"PPY IS GONE QAQ")
+    }
 
     }
 }

@@ -1,6 +1,7 @@
 package com.nixo.osubox.UserModel.View
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.annotation.RequiresApi
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import com.nixo.colagauss.GaussBuilder
 import com.nixo.osubox.Common.BaseActivity
 import com.nixo.osubox.R
 import com.nixo.osubox.SplashActivity
@@ -36,10 +38,10 @@ class UserActivity : BaseActivity<UserPresenter>() ,PpyUserFragment.UserDataInte
     @RequiresApi(Build.VERSION_CODES.M)
     override fun initActivity() {
         AlertUtils.showProgress(false,this)
-        //设置高斯模糊
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.nixo_bg2)
-        var blurBitmap = RenderScriptBitmapBlur(this@UserActivity).getBlurBitmap(25, bitmap)
-        iv_barbg.setImageBitmap(blurBitmap)
+//        //设置高斯模糊
+//        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.nixo_bg2)
+//        var blurBitmap = RenderScriptBitmapBlur(this@UserActivity).getBlurBitmap(25, bitmap)
+//        iv_barbg.setImageBitmap(blurBitmap)
         initViewPager()
         tv_unset.boi {
             SodaDialog(this).also {
@@ -77,6 +79,7 @@ class UserActivity : BaseActivity<UserPresenter>() ,PpyUserFragment.UserDataInte
         vp_pager.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
 
 
+
             if(scrollX>window.decorView.width/2){
 //                ObjectAnimator.ofFloat(v_switch,"alpha",1f,0f).start()
 //                ObjectAnimator.ofFloat(v_switch2,"alpha",0f,1f).start()
@@ -100,12 +103,15 @@ class UserActivity : BaseActivity<UserPresenter>() ,PpyUserFragment.UserDataInte
     }
 
     //Fragment回调，头像和玩家姓名
-    override fun onFace(name: String, img: String,level:String) {
+    @SuppressLint("CheckResult")
+    override suspend fun onFace(name: String, img: String, level:String) {
         tv_name.text = name
-//        Glide.with(this).load(img).ga
 
+        GaussBuilder(this).degree(20).url(img).load(iv_bar)
+//        Glide.with(this).load( RenderScriptBitmapBlur(this@UserActivity).getBlurBitmapForUrl(12,img)).into(iv_bar)
         Glide.with(this).load(img).into(civ_head)
         tv_lv.text = "Lv.$level"
+
     }
 
 

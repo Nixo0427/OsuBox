@@ -2,11 +2,15 @@ package com.nixo.osubox.Utils.Another
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
 import android.support.annotation.IntRange
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 class RenderScriptBitmapBlur(context: Context) {
 
@@ -27,4 +31,26 @@ class RenderScriptBitmapBlur(context: Context) {
         output.copyTo(original)
         return original
     }
+
+    suspend fun getBlurBitmapForUrl(@IntRange(from = 1,to = 25)radius: Int, url:String) : Bitmap=
+    //开启协程获取Bitmap
+    //suspend密封回调协程
+        withContext(Dispatchers.Default) {
+            BitmapFactory.decodeStream(
+                URL(url).openConnection().also {
+                    it.doInput = true
+                    it.connect()
+                }.getInputStream()
+            )
+        }.apply {
+            //apply函数回调
+            val input = Allocation.createFromBitmap(renderScript,this)
+            val outPut = Allocation.createTyped(renderScript,input.type)
+            val scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript))
+            scriptIntrinsicBlur.setRadius(radius.toFloat())
+            scriptIntrinsicBlur.setInput(input)
+            scriptIntrinsicBlur.forEach(outPut)
+            outPut.copyTo(this)
+        }
 }
+
